@@ -1,0 +1,23 @@
+{
+	"folders":
+	[
+		{
+			"path": "."
+		}
+	],
+	"build_systems":
+	[
+		{
+			"name":"cbd make",
+			"cmd":["cbd","make","express-dolce"]
+		},
+		{
+			"name":"cbd start",
+			"cmd":["cbd","start","express-dolce"]
+		},
+		{
+			"name":"cbd make+start",
+			"cmd":["cbd","make+start","express-dolce"]
+		}
+	]
+}

@@ -1,0 +1,16 @@
+{
+  "name": "connect-router",
+  "description": "Robust routing for express.js",
+  "version": "0.0.1",
+  "repository": {
+  },
+  "engines": {
+  },
+  "dependencies": {
+    "dolce":"*"
+  },
+  "devDependencies": {
+    "express":"*"
+  },
+  "main":"./lib/index.js"
+}
