@@ -10,7 +10,7 @@ connectRouter = require('connect-router');
 app.use(connectRouter(function(router) {
 		
 	
-	//you can use existing middleware to explictly define
+	//you can use existing middleware to explicitly define
 	//them in routes
 	router.on('parseBody', express.bodyParser());
 
