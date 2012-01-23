@@ -13,7 +13,8 @@
     "express":"*",
     "connect":"*",
     "crema":"*",
-    "haba":"*"
+    "haba":"*",
+    "ebnf-diagram": "git+https://crcn@github.com/crcn/node-ebnf-diagram.git"
   },
   "main":"./lib/index.js"
 }

@@ -48,6 +48,10 @@ app.use(connectRouter(__dirname + '/path/to/routes', 'another/path/to/traverse/*
 app.listen(8080);
 ```
 
+## Syntax
+
+![Alt syntax](http://i.imgur.com/Drjy1.png)
+
 ## API
 
 ### .router(route, ...);
