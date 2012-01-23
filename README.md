@@ -57,12 +57,17 @@ router.on('validate/token', function(req, res, next) {
 		res.send('That token is invalid');
 	}
 
+	req.profile = { username: 'someUsername' };
+
 	next();
 
 });
 
+//validate the user is logged in BEFORE returning the user profile
 router.on('-method=GET validate/token -> my/profile', function(req, res, next) {
-
+	
+	//do stuff with req.profile
+	
 	res.send('Your profile stuff');
 
 });
