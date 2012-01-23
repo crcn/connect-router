@@ -5,9 +5,15 @@ connectRouter = require('../');
 
 
 
-
-app.use(connectRouter.create(function(router) {
+app.use(connectRouter(function(router) {
 		
+	router.on('-method=GET hello/world', function(req, res, next) {
+		
+		res.send('hello');
+	});
+
+	return;
+
 	router.on('parseBody', express.bodyParser());
 	router.on('parseCookies', express.cookieParser());
 
@@ -39,4 +45,5 @@ app.use(connectRouter.create(function(router) {
 
 
 
-app.listen(8080);
+
+app.listen(8090);

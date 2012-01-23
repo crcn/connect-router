@@ -181,7 +181,7 @@ router.on('-perm /**', function(req, res, next) {
 });
 
 
-//goes through perm middleware
+//goes through permissions middleware
 router.on('-perm=SUPER invite/user', function(req, res, next) {
 	
 	res.send('You have invited a user!');
