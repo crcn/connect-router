@@ -69,6 +69,7 @@ connectRouter(__dirname + '/path/to/scan/**/*');
 //scans for files ending in .route.js
 connectRouter(__dirname + '/path/to/scan/**/*.route.js');
 
+//load in a func
 connectRouter(function(router) {
 
 	router.on('something', function(req, res) {
@@ -97,7 +98,7 @@ exports.plugin = function(router) {
 
 ## Explicit Middleware
 
-Explicit middleware is defined by using the `->` token. The basic example uses explicit middleware, but here's another example:
+Explicit middleware is defined by using the `->` token. The basic example above uses explicit middleware, but here's another example:
 
 ```javascript
 
