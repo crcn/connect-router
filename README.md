@@ -15,22 +15,24 @@ app.use(connectRouter.create(function(router) {
 	router.on('parseBody', express.bodyParser());
 
 	/**
+	 * checks if a user exists
 	 */
 
-	router.on('-method=POST user/exists', function(req, res, next) {
-		
+	router.on('user/exists', function(req, res, next) {
+			
+		//pesuedocode userExists func
 		if(userExists(req.query.username)) {
 
 			res.send('That username already exists');
 			return;
-			
+
 		}
 
 		next();
 	});
 
 	/**
-	 * signs the user up
+	 * Check if the user exists before signing up
 	 */
 
 	router.on('-method=POST parseBody -> user/exists -> signup', function(req, res, next) {
@@ -42,9 +44,15 @@ app.use(connectRouter.create(function(router) {
 }));
 
 
-
-
 app.listen(8080);
 ```
+
+## Explicit Middleware
+
+## Implicit Middleware
+
+## Greedy Middleware
+
+## Filtered Middleware
 
 
