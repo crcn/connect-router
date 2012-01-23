@@ -20,7 +20,7 @@ app.use(connectRouter(function(router) {
 
 	router.on('user/exists', function(req, res, next) {
 			
-		//pesuedocode userExists func
+		//pseudocode userExists func
 		if(userExists(req.query.username)) {
 			res.send('That username already exists');
 			return;
