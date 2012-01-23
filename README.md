@@ -105,7 +105,7 @@ router.on('-method=POST signup', function(req, res, next) {
 
 ## Greedy Middleware
 
-Greedy middleware allows you to wrap around entire paths. `some/route/**` means any path *after* ** must go through this middleware. Here's an example:
+Greedy middleware allows you to wrap around entire paths. `some/route/**` means any path *after* `**` must go through this middleware. Here's an example:
 
 ```javascript
 
