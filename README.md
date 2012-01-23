@@ -69,6 +69,14 @@ connectRouter(__dirname + '/path/to/scan/**/*');
 //scans for files ending in .route.js
 connectRouter(__dirname + '/path/to/scan/**/*.route.js');
 
+connectRouter(function(router) {
+
+	router.on('something', function(req, res) {
+		res.send('done!')
+	});
+
+});
+
 
 ```
 
