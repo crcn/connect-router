@@ -113,7 +113,7 @@ Greedy middleware allows you to wrap around entire paths. `some/route/**` means 
 //requires authorization
 router.on('-perm /**', function(req, res, next) {
 	
-	if(isAuthorized(req.data.userId, req.last.tags)) {
+	if(isAuthorized(req.data.userId, req.last.tags.perm)) {
 		res.send('Not Authorized');
 		return;
 	}
@@ -122,11 +122,36 @@ router.on('-perm /**', function(req, res, next) {
 });
 
 
+//goes through perm middleware
 router.on('-perm=SUPER invite/user', function(req, res, next) {
 	
 	res.send('You have invited a user!');
 
 });
+
+//does NOT go through perm middleware
+router.on('some/public/route', function(req, res, next) {
+	
+	res.send('You have invited a user!');
+
+});
 ```
+
+Note that greedy middleware is filterable based on the route tags. You can define anything you want. Here's another
+example:
+
+```javascript
+
+//if POST is present, then automatically parse the body
+router.on('-method=POST /**', express.parseBody());
+
+router.on('-method=POST signup', function(req, res) {
+
+	res.send('Thanks for signing up!');
+
+});
+```
+
+
 
 
