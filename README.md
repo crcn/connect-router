@@ -94,6 +94,7 @@ router.on('-method=POST signup/*', function(req, res, next) {
 
 user.js
 
+```javascript
 router.on('-method=POST signup', function(req, res, next) {
 	
 	res.send('thanks for signing up!');
