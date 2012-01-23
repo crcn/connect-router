@@ -80,6 +80,9 @@ Implicit middleware is used to *extend* existing routes. This is certainly usefu
 
 //Since we're in beta, extend the signup route. If the user has been invited, then
 //go onto the ORIGINAL signup route, otherwise return an error. 
+
+//AFTER XXXX is out of beta, all we need to do is remove beta_user.js, and users
+//can signup without any constraints.
 router.on('-method=POST signup/*', function(req, res, next) {
 	
 	if(!userInvited(req.data.signupToken)) {
