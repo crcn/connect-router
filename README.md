@@ -47,7 +47,7 @@ app.listen(8080);
 
 ## Explicit Middleware
 
-Explicit middleware is defined by using the `->` expression. The basic example uses explicit middleware, but here's another example:
+Explicit middleware is defined by using the `->` token. The basic example uses explicit middleware, but here's another example:
 
 ```javascript
 
