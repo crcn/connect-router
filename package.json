@@ -10,7 +10,9 @@
     "dolce":"*"
   },
   "devDependencies": {
-    "express":"*"
+    "express":"*",
+    "connect":"*",
+    "crema":"*"
   },
   "main":"./lib/index.js"
 }

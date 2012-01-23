@@ -1,4 +1,15 @@
 var express = require('express'),
-server = express.createServer();
+app = express.createServer(),
+connectRouter = require('../'),
+appRouter = connectRouter.create(app);
 
-console.log(server.use.toString())
+
+
+appRouter.on('get hello/world', function(req, res) {
+	
+	console.log(req);
+	
+});
+
+
+app.listen(8080);
