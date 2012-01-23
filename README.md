@@ -1,4 +1,4 @@
-Connect Routing with syntactic sugar
+## Connect router with syntactic sugar
 
 ## Basic Example
 
@@ -7,7 +7,7 @@ var express = require('express'),
 app = express.createServer(),
 connectRouter = require('connect-router');
 
-app.use(connectRouter.create(function(router) {
+app.use(connectRouter(function(router) {
 		
 	
 	//you can use existing middleware to explictly define
@@ -41,9 +41,47 @@ app.use(connectRouter.create(function(router) {
 
 }));
 
+//OR load routes from a directory
+app.use(connectRouter(__dirname + '/path/to/routes', 'another/path/to/traverse/**/*')); 
+
 
 app.listen(8080);
 ```
+
+## API
+
+### .router(route, ...);
+
+Loads in the given routes. Can be a function, or a list of paths to load in. For example:
+
+```javascript
+
+//scans a directory for routes
+connectRouter(__dirname + '/path/to/scan');
+
+//recursively scans paths for routes
+connectRouter(__dirname + '/path/to/scan/**/*');
+
+//scans for files ending in .route.js
+connectRouter(__dirname + '/path/to/scan/**/*.route.js');
+
+
+```
+
+A route plugin should look something like this:
+
+```javascript
+
+exports.plugin = function(router) {
+	
+	router.on('-method=POST signup', function() {
+		//do stuff
+	});
+}
+
+```
+
+
 
 ## Explicit Middleware
 

@@ -12,7 +12,8 @@
   "devDependencies": {
     "express":"*",
     "connect":"*",
-    "crema":"*"
+    "crema":"*",
+    "haba":"*"
   },
   "main":"./lib/index.js"
 }
