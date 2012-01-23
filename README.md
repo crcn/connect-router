@@ -145,6 +145,7 @@ example:
 //if POST is present, then automatically parse the body
 router.on('-method=POST /**', express.parseBody());
 
+//body is automatically parsed for us
 router.on('-method=POST signup', function(req, res) {
 
 	res.send('Thanks for signing up!');
