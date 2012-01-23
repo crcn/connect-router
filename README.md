@@ -50,7 +50,7 @@ app.listen(8080);
 
 ## Syntax
 
-![Alt syntax](http://i.imgur.com/Drjy1.png)
+![Alt syntax](http://i.imgur.com/Q3IJz.png)
 
 ## API
 
