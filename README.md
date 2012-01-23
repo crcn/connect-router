@@ -74,7 +74,7 @@ router.on('-method=GET validate/token -> my/profile', function(req, res, next) {
 Implicit middleware is used to *extend* existing routes. This is certainly useful if you want to drop in plugins which are specific to a given route. A good use case:
 
 
-beta_user.js:
+### beta_user.js:
 
 ```javascript
 
@@ -92,7 +92,7 @@ router.on('-method=POST signup/*', function(req, res, next) {
 
 ```
 
-user.js
+### user.js
 
 ```javascript
 router.on('-method=POST signup', function(req, res, next) {
