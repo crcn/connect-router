@@ -23,7 +23,7 @@
 			"file": "lib/index.js",
 			"settings":
 			{
-				"buffer_size": 1769,
+				"buffer_size": 1825,
 				"line_ending": "Unix"
 			}
 		},
@@ -55,7 +55,30 @@
 			"file": "examples/auth.js",
 			"settings":
 			{
-				"buffer_size": 653,
+				"buffer_size": 751,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "test/benchmark-routes.js",
+			"settings":
+			{
+				"buffer_size": 221,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "test/benchmark.js",
+			"settings":
+			{
+				"buffer_size": 925,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"settings":
+			{
+				"buffer_size": 0,
 				"line_ending": "Unix"
 			}
 		},
@@ -63,7 +86,7 @@
 			"file": "package.json",
 			"settings":
 			{
-				"buffer_size": 311,
+				"buffer_size": 390,
 				"line_ending": "Unix"
 			}
 		},
@@ -84,10 +107,37 @@
 			}
 		},
 		{
+			"contents": "## Connect router with syntactic sugar\n\n\n\n## Basic Example\n\n```javascript\nvar express = require('express'),\napp = express.createServer(),\nconnectRouter = require('connect-router');\n\napp.use(connectRouter(function(router) {\n		\n	\n	//you can use existing middleware to explicitly define\n	//them in routes\n	router.on('parseBody', express.bodyParser());\n\n	/**\n	 * checks if a user exists\n	 */\n\n	router.on('user/exists', function(req, res, next) {\n			\n		//pseudocode userExists func\n		if(userExists(req.query.username)) {\n			res.send('That username already exists');\n			return;\n		}\n\n		next();\n	});\n\n	/**\n	 * Check if the user exists before signing up\n	 */\n\n	router.on('-method=POST parseBody -> user/exists -> signup', function(req, res, next) {\n		\n		res.send('Successfuly signed up ');\n\n	});\n\n}));\n\n//OR load routes from a directory\napp.use(connectRouter(__dirname + '/path/to/routes', 'another/path/to/traverse/**/*')); \n\n\napp.listen(8080);\n```\n\n## Syntax\n\n![Alt syntax](http://i.imgur.com/Q3IJz.png)\n\n## API\n\n### .router(route, ...);\n\nLoads in the given routes. Can be a function, or a list of paths to load in. For example:\n\n```javascript\n\n//scans a directory for routes\nconnectRouter(__dirname + '/path/to/scan');\n\n//recursively scans paths for routes\nconnectRouter(__dirname + '/path/to/scan/**/*');\n\n//scans for files ending in .route.js\nconnectRouter(__dirname + '/path/to/scan/**/*.route.js');\n\n//load in a func\nconnectRouter(function(router) {\n\n	router.on('something', function(req, res) {\n		res.send('done!')\n	});\n\n});\n\n\n```\n\nA route plugin should look something like this:\n\n```javascript\n\nexports.plugin = function(router) {\n	\n	router.on('-method=POST signup', function() {\n		//do stuff\n	});\n}\n\n```\n\n\n\n## Explicit Middleware\n\nExplicit middleware is defined by using the `->` token. The basic example above uses explicit middleware, but here's another example:\n\n```javascript\n\nrouter.on('validate/token', function(req, res, next) {\n	\n	if(!tokenValid(req.data.token)) {\n		res.send('That token is invalid');\n	}\n\n	req.profile = { username: 'someUsername' };\n\n	next();\n\n});\n\n//validate the user is logged in BEFORE returning the user profile\nrouter.on('-method=GET validate/token -> my/profile', function(req, res, next) {\n	\n	//do stuff with req.profile\n	\n	res.send('Your profile stuff');\n\n});\n\n```\n\n## Implicit Middleware\n\nImplicit middleware is used to *extend* existing routes. This is certainly useful if you want to drop in plugins which are specific to a given route. A good use case:\n\n\n### beta_user.js:\n\n```javascript\n\n//Since we're in beta, extend the signup route. If the user has been invited, then\n//go onto the ORIGINAL signup route, otherwise return an error. \n\n//AFTER XXXX is out of beta, all we need to do is remove beta_user.js, and users\n//can signup without any constraints.\nrouter.on('-method=POST signup/*', function(req, res, next) {\n	\n	if(!userInvited(req.data.signupToken)) {\n		res.send('You have not been invited yet.');\n		return;\n	}\n\n	next();\n});\n\n```\n\n### user.js\n\n```javascript\nrouter.on('-method=POST signup', function(req, res, next) {\n	\n	res.send('thanks for signing up!');\n\n\n});\n```\n\n## Greedy Middleware\n\nGreedy middleware allows you to wrap around entire paths. `some/route/**` means any path *after* `**` must go through this middleware. Here's an example:\n\n```javascript\n\n//injected as middleware if -perm is provided. -perm tags flag that a route\n//requires authorization\nrouter.on('-perm /**', function(req, res, next) {\n	\n	if(isAuthorized(req.data.userId, req.last.tags.perm)) {\n		res.send('Not Authorized');\n		return;\n	}\n\n	next();\n});\n\n\n//goes through permissions middleware\nrouter.on('-perm=SUPER invite/user', function(req, res, next) {\n	\n	res.send('You have invited a user!');\n\n});\n\n//does NOT go through perm middleware\nrouter.on('some/public/route', function(req, res, next) {\n	\n	res.send('You have invited a user!');\n\n});\n```\n\nNote that greedy middleware is filterable based on the route tags. You can define anything you want. Here's another\nexample:\n\n```javascript\n\n//if POST is present, then automatically parse the body\nrouter.on('-method=POST /**', express.parseBody());\n\n//body is automatically parsed for us\nrouter.on('-method=POST signup', function(req, res) {\n\n	res.send('Thanks for signing up!');\n\n});\n```\n\n\n\n\n",
 			"file": "README.md",
+			"file_size": 4266,
+			"file_write_time": 1327340445000000,
 			"settings":
 			{
-				"buffer_size": 4070,
+				"buffer_size": 4268,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/tmp/subl stdin 8xPbpg.txt",
+			"settings":
+			{
+				"buffer_size": 0,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "build/syntax.ebnf",
+			"settings":
+			{
+				"buffer_size": 200,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "build/build-ebnf",
+			"settings":
+			{
+				"buffer_size": 186,
 				"line_ending": "Unix"
 			}
 		}
@@ -173,6 +223,7 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"dolce",
 			".create",
 			"express",
 			"_request",
@@ -292,7 +343,7 @@
 	"groups":
 	[
 		{
-			"selected": 9,
+			"selected": 1,
 			"sheets":
 			[
 				{
@@ -326,23 +377,24 @@
 					"file": "lib/index.js",
 					"settings":
 					{
-						"buffer_size": 1769,
+						"buffer_size": 1825,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1171,
-								1171
+								828,
+								828
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 947.0,
+						"translation.y": 437.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -431,15 +483,42 @@
 					"file": "examples/auth.js",
 					"settings":
 					{
-						"buffer_size": 653,
+						"buffer_size": 751,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								653
+								729,
+								729
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "test/benchmark-routes.js",
+					"settings":
+					{
+						"buffer_size": 221,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								83,
+								83
 							]
 						],
 						"settings":
@@ -453,19 +532,72 @@
 					"type": "text"
 				},
 				{
-					"buffer": 6,
-					"file": "package.json",
+					"buffer": 7,
+					"file": "test/benchmark.js",
 					"settings":
 					{
-						"buffer_size": 311,
+						"buffer_size": 925,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								277,
-								277
+								455,
+								455
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"settings":
+					{
+						"buffer_size": 0,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"default_dir": "/Users/craig/Dropbox/Developer/Public/connect-router/examples",
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "package.json",
+					"settings":
+					{
+						"buffer_size": 390,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
 							]
 						],
 						"settings":
@@ -481,7 +613,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 7,
+					"buffer": 10,
 					"file": "node_modules/express/index.js",
 					"settings":
 					{
@@ -507,7 +639,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 8,
+					"buffer": 11,
 					"file": "node_modules/express/lib/http.js",
 					"settings":
 					{
@@ -535,27 +667,106 @@
 					"type": "text"
 				},
 				{
-					"buffer": 9,
+					"buffer": 12,
 					"file": "README.md",
 					"settings":
 					{
-						"buffer_size": 4070,
+						"buffer_size": 4268,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1373,
-								1382
+								3722,
+								3722
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Markdown/Markdown.tmLanguage"
+							"syntax": "Packages/Markdown/Markdown.tmLanguage",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 525.0,
+						"translation.y": 2567.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 13,
+					"file": "/tmp/subl stdin 8xPbpg.txt",
+					"settings":
+					{
+						"buffer_size": 0,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 14,
+					"file": "build/syntax.ebnf",
+					"settings":
+					{
+						"buffer_size": 200,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 15,
+					"file": "build/build-ebnf",
+					"settings":
+					{
+						"buffer_size": 186,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								103,
+								103
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
