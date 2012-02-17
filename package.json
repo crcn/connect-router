@@ -2,19 +2,17 @@
   "name": "connect-router",
   "description": "Robust routing for express.js",
   "version": "0.0.2",
-  "repository": {
-  },
-  "engines": {
-  },
+  "repository": {},
+  "engines": {},
   "dependencies": {
-    "dolce":"*"
+    "dolce": "*"
   },
   "devDependencies": {
-    "express":"*",
-    "connect":"*",
-    "crema":"*",
-    "haba":"*",
+    "express": "*",
+    "connect": "*",
+    "crema": "*",
+    "haba": "*",
     "ebnf-diagram": "git+https://crcn@github.com/crcn/node-ebnf-diagram.git"
   },
-  "main":"./lib/index.js"
+  "main": "./lib/index.js"
 }

@@ -1,5 +1,7 @@
 ## Connect router with syntactic sugar
 
+
+
 ## Basic Example
 
 ```javascript
